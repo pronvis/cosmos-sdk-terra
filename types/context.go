@@ -59,6 +59,12 @@ func (c Context) IsReCheckTx() bool           { return c.recheckTx }
 func (c Context) MinGasPrices() DecCoins      { return c.minGasPrice }
 func (c Context) EventManager() *EventManager { return c.eventManager }
 
+func (c Context) NewContext() (Context) {
+	c.gasMeter = stypes.NewInfiniteGasMeter()
+	c.blockGasMeter = stypes.NewInfiniteGasMeter()
+	return c
+}
+
 // clone the header before returning
 func (c Context) BlockHeader() tmproto.Header {
 	var msg = proto.Clone(&c.header).(*tmproto.Header)
